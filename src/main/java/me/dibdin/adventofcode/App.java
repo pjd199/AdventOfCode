@@ -15,7 +15,7 @@ public class App {
         System.out.println( "------------------");
 
         // Initialise the challenge
-        Challenge challenge = new me.dibdin.adventofcode.year2020.Day5();
+        Challenge challenge = new me.dibdin.adventofcode.year2021.Day1();
 
         // Open the input file as an AutoCloseable resource, and make it available as a stream of lines
         String filename = String.format("data/year%d/day%d.txt", challenge.getYear(), challenge.getDay());
