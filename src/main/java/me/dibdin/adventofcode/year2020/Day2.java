@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class Day2 extends AbstractChallenge {
 
+    Entry[] puzzle = null;
+
     /**
      * Helper class used to represent the password entries in the file
      */
@@ -124,15 +126,19 @@ public class Day2 extends AbstractChallenge {
     
     /**
      * Solve part one of the puzzle. 
-     * @param entries an array of entries to process
-     * @return int the number of valid entries
+     * @param puzzle an array of entries to process
+     * @return long the number of valid entries
      */
-    private int solvePartOne(Entry[] entries) {
+    public long solvePartOne() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
         int count = 0;
 
         // count how many valid entries there are.
-        for (int i = 0; i < entries.length; i++) {
-            if (isSecretValid_Old(entries[i])) {
+        for (int i = 0; i < puzzle.length; i++) {
+            if (isSecretValid_Old(puzzle[i])) {
                 count++;
             }
         }
@@ -143,15 +149,18 @@ public class Day2 extends AbstractChallenge {
     
     /**
      * Solve part two of the puzzle. 
-     * @param entries an array of entries to process
-     * @return int the number of valid entries
+     * @return long the number of valid entries
      */
-    private int solvePartTwo(Entry[] entries) {
+    public long solvePartTwo() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+        
         int count = 0;
 
         // count how many valid entries there are.
-        for (int i = 0; i < entries.length; i++) {
-            if (isSecretValid_New(entries[i])) {
+        for (int i = 0; i < puzzle.length; i++) {
+            if (isSecretValid_New(puzzle[i])) {
                 count++;
             }
         }
@@ -164,14 +173,10 @@ public class Day2 extends AbstractChallenge {
      * Solve both parts of hte puzzle for the given input. 
      * @param input a stream of strings to process as the puzzle input
      */
-    public void solve(Stream<String> input) {
+    public void setPuzzleInput(Stream<String> input) {
         
         // Convert the input into an array of Entries
         ArrayList<Entry> list = input.map(str -> new Entry(str)).collect(Collectors.toCollection(ArrayList<Entry>::new));
-        Entry[] inputArray = list.toArray(new Entry[list.size()]);
-
-        // Solve the puzzles
-        setPartOneResult(Integer.toString(solvePartOne(inputArray)));
-        setPartTwoResult(Integer.toString(solvePartTwo(inputArray)));
+        puzzle = list.toArray(new Entry[list.size()]);
     }
 }

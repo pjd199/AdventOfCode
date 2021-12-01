@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class Day3 extends AbstractChallenge {
 
+    char[][] puzzle;
+
     char OPEN = '.';
     char TREE = '#';
 
@@ -48,15 +50,12 @@ public class Day3 extends AbstractChallenge {
 
         int width = map[0].length; // width of the map
         int height = map.length;   // height of the map
-        //System.out.println(width);
-        //System.out.println(height);
     
         // while there is still height in the mountain
         while (y < height) {
             if (map[y][x] == TREE) {
                 trees++;
             }
-            //System.out.println("X:" + x + ", Y:" + y + ", T:" + trees);
             x = (x + slope.getRight()) % width;  // map repeats itself horizontally
             y = y + slope.getDown();
         }
@@ -64,11 +63,19 @@ public class Day3 extends AbstractChallenge {
         return trees;
     }
     
-    private long solvePartOne(char[][] map) {
-        return findTrees(map, new Slope(3, 1));
+    public long solvePartOne() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
+        return findTrees(puzzle, new Slope(3, 1));
     }
 
-    private long solvePartTwo(char[][] map) {
+    public long solvePartTwo() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
         long result = 1;
 
         ArrayList<Slope> slopes = new ArrayList<Slope>();
@@ -79,8 +86,7 @@ public class Day3 extends AbstractChallenge {
         slopes.add(4, new Slope(1,2));
 
         for (int i = 0; i < slopes.size(); i++) {
-            System.out.println(i + ":" + findTrees(map, slopes.get(i)));
-            result = result * findTrees(map, slopes.get(i));
+            result = result * findTrees(puzzle, slopes.get(i));
         }
 
         return result;
@@ -90,18 +96,14 @@ public class Day3 extends AbstractChallenge {
      * Solve both parts ofhar hte puzzle for the given input. 
      * @param input a stream of strings to process as the puzzle input
      */
-    public void solve(Stream<String> input) {
+    public void setPuzzleInput(Stream<String> input) {
 
         // Convert the input into an array chars
         ArrayList<char[]> list = input.map(str -> str.toCharArray()).collect(Collectors.toCollection(ArrayList<char[]>::new));
         
-        char[][] inputArray = new char[list.size()][list.get(0).length];
-        for (int i = 0; i < inputArray.length; i++) {
-            inputArray[i] = list.get(i);
+        puzzle = new char[list.size()][list.get(0).length];
+        for (int i = 0; i < puzzle.length; i++) {
+            puzzle[i] = list.get(i);
         }
-
-        // Solve the puzzles
-        setPartOneResult(Long.toString(solvePartOne(inputArray)));
-        setPartTwoResult(Long.toString(solvePartTwo(inputArray)));
     }
 }

@@ -2,7 +2,6 @@ package me.dibdin.adventofcode.year2020;
 import me.dibdin.adventofcode.*;
 
 import java.util.stream.Stream;
-import java.lang.NullPointerException;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,21 +31,13 @@ class Day4Test {
 
     @Test
     @Order(2)
-    void nullBeforeSolvingTest() 
-    {
-        // assert the pre-test state is null
-        assertTrue(challenge.getPartOneResult() == null);
-        assertTrue(challenge.getPartTwoResult() == null);
+    void cannotSolveNullInputTest() {
+        assertThrows(IllegalStateException.class, () -> challenge.solvePartOne());
+        assertThrows(IllegalStateException.class, () -> challenge.solvePartOne());
     }
 
     @Test
     @Order(3)
-    void cannotSolveNullInputTest() {
-        assertThrows(NullPointerException.class, () -> challenge.solve(null));
-    }
-
-    @Test
-    @Order(4)
     void solveWithSampleInputTest()
     {
         // form the test  input stream
@@ -67,15 +58,15 @@ class Day4Test {
         );
 
         // find the solution
-        challenge.solve(input);
+        challenge.setPuzzleInput(input);
 
         // assert the result is corrent
-        assertEquals("2", challenge.getPartOneResult());
-        assertEquals("2", challenge.getPartTwoResult());
+        assertEquals(2, challenge.solvePartOne());
+        assertEquals(2, challenge.solvePartTwo());
     }
 
     @Test
-    @Order(5)
+    @Order(4)
     void solveWithSampleInputAllInvalidTest()
     {
         // form the test  input stream
@@ -96,14 +87,14 @@ class Day4Test {
         );
 
         // find the solution
-        challenge.solve(input);
+        challenge.setPuzzleInput(input);
 
         // assert the result is correct
-       assertEquals("0", challenge.getPartTwoResult());
+       assertEquals(0, challenge.solvePartTwo());
     }
 
     @Test
-    @Order(6)
+    @Order(5)
     void solveWithSampleInputAllValidTest()
     {
         // form the test  input stream
@@ -123,9 +114,9 @@ class Day4Test {
         );
 
         // find the solution
-        challenge.solve(input);
+        challenge.setPuzzleInput(input);
 
         // assert the result is correct
-       assertEquals("4", challenge.getPartTwoResult());
+       assertEquals(4, challenge.solvePartTwo());
     }
 }

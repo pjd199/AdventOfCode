@@ -8,9 +8,6 @@ public abstract class AbstractChallenge implements Challenge {
     private int year;
     private int day;
 
-    private String partOneResult = null;
-    private String partTwoResult = null;
-
     protected AbstractChallenge(String name, int year, int day) {
         this.name = name;
         this.year = year;
@@ -29,21 +26,9 @@ public abstract class AbstractChallenge implements Challenge {
         return day;
     }
 
-    protected void setPartOneResult(String result) {
-        partOneResult = result;
-    }
+    public abstract void setPuzzleInput(Stream<String> input);
 
-    protected void setPartTwoResult(String result) {
-        partTwoResult = result;
-    }
+    public abstract long solvePartOne();
 
-    public abstract void solve(Stream<String> input);
-
-    public String getPartOneResult() {
-        return partOneResult;
-    }
-
-    public String getPartTwoResult() {
-        return partTwoResult;
-    }
+    public abstract long solvePartTwo();
 }

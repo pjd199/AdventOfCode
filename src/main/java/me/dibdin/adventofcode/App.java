@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  * Advent of Code app - main entry point
  */
 public class App {
-    public static void main( String[] args )
+    public static void main(String[] args)
     {
         System.out.println( "------------------");
         System.out.println( "| Advent of Code |");
@@ -22,12 +22,12 @@ public class App {
         try (Stream<String> stream = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(filename))).lines()) {
 
             // Solve the challenge
-            challenge.solve(stream);
+            challenge.setPuzzleInput(stream);
 
             // Print the results
             System.out.println("Solved the '" + challenge.getName() + "' Challenge (Year " + challenge.getYear() + ", Day " + challenge.getDay() + ")");
-            System.out.println("Part One Result: " + challenge.getPartOneResult());
-            System.out.println("Part Two Result: " + challenge.getPartTwoResult());
+            System.out.println("Part One Result: " + challenge.solvePartOne());
+            System.out.println("Part Two Result: " + challenge.solvePartTwo());
                 
         } catch (Exception err) {
             // Something serious has gone wrong

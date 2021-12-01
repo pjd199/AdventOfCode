@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class Day4 extends AbstractChallenge {
 
+    Passport[] puzzle = null;
+
     public class Passport {
         
         /**
@@ -139,20 +141,28 @@ public class Day4 extends AbstractChallenge {
         super ("Passport Processing", 2020, 4);
     }
 
-    private long solvePartOne(Passport[] passports) {
+    public long solvePartOne() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
         long validPassportCount = 0;
-        for (int i = 0; i < passports.length; i++) {
-            if (passports[i].hasRequiredFields(false)) {
+        for (int i = 0; i < puzzle.length; i++) {
+            if (puzzle[i].hasRequiredFields(false)) {
                 validPassportCount++;
             }
         }
         return validPassportCount;
     }
 
-    private long solvePartTwo(Passport[] passports) {
+    public long solvePartTwo() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
         long validPassportCount = 0;
-        for (int i = 0; i < passports.length; i++) {
-            if (passports[i].isDataValid()) {
+        for (int i = 0; i < puzzle.length; i++) {
+            if (puzzle[i].isDataValid()) {
                 validPassportCount++;
             }
         }
@@ -163,7 +173,7 @@ public class Day4 extends AbstractChallenge {
      * Solve both parts ofhar hte puzzle for the given input. 
      * @param input a stream of strings to process as the puzzle input
      */
-    public void solve(Stream<String> input) {
+    public void setPuzzleInput(Stream<String> input) {
         ArrayList<Passport> passportList = new ArrayList<Passport>();
         HashMap<String, String> fields = new HashMap<String, String>();
 
@@ -192,8 +202,6 @@ public class Day4 extends AbstractChallenge {
 
         // Solve the puzzles
         Passport[] passportArray = new Passport[passportList.size()];
-        passportArray = passportList.toArray(passportArray);
-        setPartOneResult(Long.toString(solvePartOne(passportArray)));
-        setPartTwoResult(Long.toString(solvePartTwo(passportArray)));
+        puzzle = passportList.toArray(passportArray);
     }
 }

@@ -10,9 +10,9 @@ public interface Challenge {
 
     public int getDay();
 
-    public void solve(Stream<String> input);
+    public void setPuzzleInput(Stream<String> input);
 
-    public String getPartOneResult();
+    public long solvePartOne();
 
-    public String getPartTwoResult();
+    public long solvePartTwo();
 }

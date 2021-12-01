@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class Day5 extends AbstractChallenge {
 
+    Seat[] puzzle = null;
+
     class Seat implements Comparable<Seat> {
         private int row;
         private int column;
@@ -52,14 +54,22 @@ public class Day5 extends AbstractChallenge {
         super ("Binary Boarding", 2020, 5);
     }
 
-    private int solvePartOne(Seat[] input) {
-        return input[input.length - 1].getSeatId();
+    public long solvePartOne() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
+        return puzzle[puzzle.length - 1].getSeatId();
     }
 
-    private int solvePartTwo(Seat[] input) {
-        for (int i = 0; i < (input.length - 1); i++) {
-            if ((input[i].getSeatId() + 1) == (input[i+1].getSeatId() - 1)) {
-                    return input[i].getSeatId() + 1;
+    public long solvePartTwo() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
+        for (int i = 0; i < (puzzle.length - 1); i++) {
+            if ((puzzle[i].getSeatId() + 1) == (puzzle[i+1].getSeatId() - 1)) {
+                    return puzzle[i].getSeatId() + 1;
             }
         }
         return -1;
@@ -69,15 +79,11 @@ public class Day5 extends AbstractChallenge {
      * Solve both parts of the puzzle for the given input. 
      * @param input a stream of strings to process as the puzzle input
      */
-    public void solve(Stream<String> input) {
+    public void setPuzzleInput(Stream<String> input) {
 
         ArrayList<Seat> seatList = input.map(str -> new Seat(str))
                                      .sorted()
                                      .collect(Collectors.toCollection(ArrayList<Seat>::new));
-        Seat[] seats = seatList.toArray(new Seat[seatList.size()]);
-
-        // Solve the puzzles
-        setPartOneResult(Integer.toString(solvePartOne(seats)));
-        setPartTwoResult(Integer.toString(solvePartTwo(seats)));
+        puzzle = seatList.toArray(new Seat[seatList.size()]);
     }
 }

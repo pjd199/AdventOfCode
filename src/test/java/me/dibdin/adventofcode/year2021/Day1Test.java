@@ -3,7 +3,7 @@ package me.dibdin.adventofcode.year2021;
 import me.dibdin.adventofcode.Challenge;
 
 import java.util.stream.Stream;
-import java.lang.NullPointerException;
+import java.lang.IllegalStateException;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,21 +33,13 @@ class Day1Test {
 
     @Test
     @Order(2)
-    void nullBeforeSolvingTest() 
-    {
-        // assert the pre-test state is null
-        assertTrue(challenge.getPartOneResult() == null);
-        assertTrue(challenge.getPartTwoResult() == null);
+    void cannotSolveNullInputTest() {
+        assertThrows(IllegalStateException.class, () -> challenge.solvePartOne());
+        assertThrows(IllegalStateException.class, () -> challenge.solvePartOne());
     }
 
     @Test
     @Order(3)
-    void cannotSolveNullInputTest() {
-        assertThrows(NullPointerException.class, () -> challenge.solve(null));
-    }
-
-    @Test
-    @Order(4)
     void solveWithSampleInputTest()
     {
         // form the test  input stream
@@ -65,10 +57,10 @@ class Day1Test {
         );
 
         // find the solution
-        challenge.solve(input);
+        challenge.setPuzzleInput(input);
 
         // assert the result is corrent
-        assertEquals("7", challenge.getPartOneResult());
-        assertEquals("5", challenge.getPartTwoResult());
+        assertEquals(7, challenge.solvePartOne());
+        assertEquals(5, challenge.solvePartTwo());
     }
 }
