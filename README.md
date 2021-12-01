@@ -1,3 +1,3 @@
-# AdventOfCode
-Advent of Code Challenges, solved in Java
-For more details https://adventofcode.com/
+# Advent Of Code
+Advent of Code Challenges, solved in Java.\
+For more details, see https://adventofcode.com/
