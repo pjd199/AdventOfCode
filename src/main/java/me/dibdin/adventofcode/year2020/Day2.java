@@ -126,7 +126,6 @@ public class Day2 extends AbstractChallenge {
     
     /**
      * Solve part one of the puzzle. 
-     * @param puzzle an array of entries to process
      * @return long the number of valid entries
      */
     public long solvePartOne() {

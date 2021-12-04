@@ -41,7 +41,7 @@ public class Day4 extends AbstractChallenge {
 
         /**
          * Mark the specified number in baord
-         * @param number
+         * @param number the number to mark as calls
          */
         public void mark(int number) {
             for (int row = 0; row < rows; row++) {
