@@ -5,6 +5,11 @@ import me.dibdin.adventofcode.AbstractChallenge;
 import java.util.stream.Stream;
 import java.lang.IllegalStateException;
 
+
+/**
+ * Advent of Code Challenge 2021 - Day 1: Sonar Sweep.
+ * https://adventofcode.com/2021/day/1
+ */
 public class Day1 extends AbstractChallenge {
 
     int[] puzzle = null;
