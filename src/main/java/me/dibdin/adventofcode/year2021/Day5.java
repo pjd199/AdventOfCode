@@ -17,7 +17,7 @@ import java.lang.IllegalStateException;
 public class Day5 extends AbstractChallenge {
 
     ArrayList<Line> puzzle = null;
-    int [][] grid = null;
+    int[][] grid = null;
 
     /**
      * Helper class to represent a line
@@ -30,6 +30,7 @@ public class Day5 extends AbstractChallenge {
 
         /**
          * Construct a new line object
+         * 
          * @param x1 the X co-ordinate at the start of the line
          * @param y1 the Y co-ordinate at the start of the line
          * @param x2 the X co-ordinate at the end of the line
@@ -44,6 +45,7 @@ public class Day5 extends AbstractChallenge {
 
         /**
          * Get the X co-ordinate at the start of the line
+         * 
          * @return the X co-ordinate
          */
         public int getX1() {
@@ -52,6 +54,7 @@ public class Day5 extends AbstractChallenge {
 
         /**
          * Get the Y co-ordinate at the start of the line
+         * 
          * @return the Y co-ordinate
          */
         public int getY1() {
@@ -60,6 +63,7 @@ public class Day5 extends AbstractChallenge {
 
         /**
          * Get the X co-ordinate at the end of the line
+         * 
          * @return the X co-ordinate
          */
         public int getX2() {
@@ -68,22 +72,24 @@ public class Day5 extends AbstractChallenge {
 
         /**
          * Get the Y co-ordinate at the end of the line
+         * 
          * @return the Y co-ordinate
          */
         public int getY2() {
             return this.y2;
         }
-    } 
+    }
 
     /**
      * Constructor.
      */
     public Day5() {
-        super ("Hydrothermal Venture", 2021, 5);
+        super("Hydrothermal Venture", 2021, 5);
     }
 
     /**
      * Map a horizonal line
+     * 
      * @param line the line to map
      */
     private void mapHorizontalLine(Line line) {
@@ -95,9 +101,9 @@ public class Day5 extends AbstractChallenge {
         grid[line.getY2()][line.getX2()]++; // add the final point
     }
 
-
     /**
      * Map a vertical line
+     * 
      * @param line the line to map
      */
     private void mapVerticalLine(Line line) {
@@ -111,6 +117,7 @@ public class Day5 extends AbstractChallenge {
 
     /**
      * Map a diagonal line
+     * 
      * @param line the line to map
      */
     private void mapDiagonalLine(Line line) {
@@ -126,6 +133,7 @@ public class Day5 extends AbstractChallenge {
 
     /**
      * Count how map times the lines cross on the map
+     * 
      * @return the count
      */
     private long countOverlaps() {
@@ -144,7 +152,7 @@ public class Day5 extends AbstractChallenge {
      * Solve part one of the puzzle
      */
     public long solvePartOne() {
-        if (puzzle == null) { 
+        if ((puzzle == null) || (grid == null)) {
             throw new IllegalStateException("No puzzle input set");
         }
 
@@ -170,7 +178,7 @@ public class Day5 extends AbstractChallenge {
      * Solve part two of the puzzle
      */
     public long solvePartTwo() {
-        if (puzzle == null) { 
+        if ((puzzle == null) || (grid == null)) {
             throw new IllegalStateException("No puzzle input set");
         }
 
@@ -195,10 +203,11 @@ public class Day5 extends AbstractChallenge {
     }
 
     /**
-     * Take the stream of strings, and decode the input into puzzle data for this challenge.
+     * Take the stream of strings, and decode the input into puzzle data for this
+     * challenge.
      */
     public void setPuzzleInput(Stream<String> input) {
- 
+
         // decode the input stream into Lines of the puzzle
         Pattern pattern = Pattern.compile("(\\d+),(\\d+) -> (\\d+),(\\d+)");
 
@@ -206,15 +215,15 @@ public class Day5 extends AbstractChallenge {
             final Matcher matcher = pattern.matcher(str);
             if (matcher.matches()) {
                 return new Line(Integer.parseInt(matcher.group(1)),
-                                Integer.parseInt(matcher.group(2)),
-                                Integer.parseInt(matcher.group(3)),
-                                Integer.parseInt(matcher.group(4)));
+                        Integer.parseInt(matcher.group(2)),
+                        Integer.parseInt(matcher.group(3)),
+                        Integer.parseInt(matcher.group(4)));
             } else {
                 return null;
             }
-        }).filter(x -> x != null).collect(Collectors.toCollection(ArrayList<Line>::new)); 
+        }).filter(x -> x != null).collect(Collectors.toCollection(ArrayList<Line>::new));
 
-        //create the grid
+        // create the grid
         int cols = 0;
         int rows = 0;
         for (Line line : puzzle) {
