@@ -3,6 +3,7 @@ package me.dibdin.adventofcode.year2021;
 import me.dibdin.adventofcode.AbstractChallenge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.regex.Pattern;
@@ -16,13 +17,24 @@ import java.lang.IllegalStateException;
 public class Day5 extends AbstractChallenge {
 
     ArrayList<Line> puzzle = null;
+    int [][] grid = null;
 
+    /**
+     * Helper class to represent a line
+     */
     private class Line {
         private int x1;
         private int y1;
         private int x2;
         private int y2;
 
+        /**
+         * Construct a new line object
+         * @param x1 the X co-ordinate at the start of the line
+         * @param y1 the Y co-ordinate at the start of the line
+         * @param x2 the X co-ordinate at the end of the line
+         * @param y2 the Y co-ordinate at the end` of the line
+         */
         private Line(int x1, int y1, int x2, int y2) {
             this.x1 = x1;
             this.y1 = y1;
@@ -30,18 +42,34 @@ public class Day5 extends AbstractChallenge {
             this.y2 = y2;
         }
 
+        /**
+         * Get the X co-ordinate at the start of the line
+         * @return the X co-ordinate
+         */
         public int getX1() {
             return this.x1;
         }
 
+        /**
+         * Get the Y co-ordinate at the start of the line
+         * @return the Y co-ordinate
+         */
         public int getY1() {
             return this.y1;
         }
 
+        /**
+         * Get the X co-ordinate at the end of the line
+         * @return the X co-ordinate
+         */
         public int getX2() {
             return this.x2;
         }
 
+        /**
+         * Get the Y co-ordinate at the end of the line
+         * @return the Y co-ordinate
+         */
         public int getY2() {
             return this.y2;
         }
@@ -54,55 +82,53 @@ public class Day5 extends AbstractChallenge {
         super ("Hydrothermal Venture", 2021, 5);
     }
 
-    private int[][] newGrid() {
-        // find the number of rows and cols in the puzzle
-        int cols = 0;
-        int rows = 0;
-        for (Line line : puzzle) {
-            cols = Integer.max(Integer.max(cols, line.getX1()), line.getX2());
-            rows = Integer.max(Integer.max(rows, line.getY1()), line.getY2());
+    /**
+     * Map a horizonal line
+     * @param line the line to map
+     */
+    private void mapHorizontalLine(Line line) {
+        int x = line.getX1();
+        while (x != line.getX2()) {
+            grid[line.getY1()][x]++;
+            x = (x < line.getX2()) ? (x + 1) : (x - 1);
         }
-
-        //create the grid
-        return new int[rows + 1][cols + 1]; // default values are zero
+        grid[line.getY2()][line.getX2()]++; // add the final point
     }
 
-    private void mapIfHorizontal(int grid[][], Line line) {
-        // map if a horizontal lines (ie y1 == y2)
-        if (line.getY1() == line.getY2()) {
-            int colStart = Integer.min(line.getX1(), line.getX2());
-            int colEnd = Integer.max(line.getX1(), line.getX2());
-            for (int i = colStart; i <= colEnd; i++) {
-                grid[line.getY1()][i]++;
-            }
+
+    /**
+     * Map a vertical line
+     * @param line the line to map
+     */
+    private void mapVerticalLine(Line line) {
+        int y = line.getY1();
+        while (y != line.getY2()) {
+            grid[y][line.getX1()]++;
+            y = (y < line.getY2()) ? (y + 1) : (y - 1);
         }
+        grid[line.getY2()][line.getX2()]++; // add the final point
     }
 
-    private void mapIfVertical(int grid[][], Line line) {
-        // map if a vertical line (ie y1 == y2)
-        if (line.getX1() == line.getX2()) {
-            int rowStart = Integer.min(line.getY1(), line.getY2());
-            int rowEnd = Integer.max(line.getY1(), line.getY2());
-            for (int i = rowStart; i <= rowEnd; i++) {
-                grid[i][line.getX1()]++;
-            }
+    /**
+     * Map a diagonal line
+     * @param line the line to map
+     */
+    private void mapDiagonalLine(Line line) {
+        int x = line.getX1();
+        int y = line.getY1();
+        while (x != line.getX2() && y != line.getY2()) {
+            grid[y][x]++;
+            x = (x < line.getX2()) ? (x + 1) : (x - 1);
+            y = (y < line.getY2()) ? (y + 1) : (y - 1);
         }
+        grid[line.getY2()][line.getX2()]++; // add the final point
     }
 
-    private void mapIfDiagonal(int grid[][], Line line) {
-        if (!(line.getX1() == line.getX2()) && !(line.getY1() == line.getY2())) {
-            int x = line.getX1();
-            int y = line.getY1();
-            while (x != line.getX2() && y != line.getY2()) {
-                grid[y][x]++;
-                x = (x < line.getX2()) ? (x + 1) : (x - 1);
-                y = (y < line.getY2()) ? (y + 1) : (y - 1);
-            }
-            grid[line.getY2()][line.getX2()]++;
-        }
-    }
-
-    private long countOverlaps(int grid[][]) {
+    /**
+     * Count how map times the lines cross on the map
+     * @return the count
+     */
+    private long countOverlaps() {
         int result = 0;
         for (int row = 0; row < grid.length; row++) {
             for (int col = 0; col < grid[row].length; col++) {
@@ -122,16 +148,22 @@ public class Day5 extends AbstractChallenge {
             throw new IllegalStateException("No puzzle input set");
         }
 
-        int[][] grid = newGrid();
+        // clear the grid
+        for (int[] row : grid) {
+            Arrays.fill(row, 0);
+        }
 
         // map the lines into the grid
         for (Line line : puzzle) {
-            mapIfHorizontal(grid, line);
-            mapIfVertical(grid, line);
+            if (line.getY1() == line.getY2()) {
+                mapHorizontalLine(line);
+            } else if (line.getX1() == line.getX2()) {
+                mapVerticalLine(line);
+            }
         }
 
         // find the number of overlaps
-        return countOverlaps(grid);
+        return countOverlaps();
     }
 
     /**
@@ -142,17 +174,24 @@ public class Day5 extends AbstractChallenge {
             throw new IllegalStateException("No puzzle input set");
         }
 
-        int[][] grid = newGrid();
+        // clear the grid
+        for (int[] row : grid) {
+            Arrays.fill(row, 0);
+        }
 
         // map the lines into the grid
         for (Line line : puzzle) {
-            mapIfHorizontal(grid, line);
-            mapIfVertical(grid, line);
-            mapIfDiagonal(grid, line);
+            if (line.getY1() == line.getY2()) {
+                mapHorizontalLine(line);
+            } else if (line.getX1() == line.getX2()) {
+                mapVerticalLine(line);
+            } else {
+                mapDiagonalLine(line);
+            }
         }
 
         // find the number of overlaps
-        return countOverlaps(grid);
+        return countOverlaps();
     }
 
     /**
@@ -160,7 +199,7 @@ public class Day5 extends AbstractChallenge {
      */
     public void setPuzzleInput(Stream<String> input) {
  
-        //322,257 -> 157,422
+        // decode the input stream into Lines of the puzzle
         Pattern pattern = Pattern.compile("(\\d+),(\\d+) -> (\\d+),(\\d+)");
 
         puzzle = input.map(str -> {
@@ -175,5 +214,13 @@ public class Day5 extends AbstractChallenge {
             }
         }).filter(x -> x != null).collect(Collectors.toCollection(ArrayList<Line>::new)); 
 
+        //create the grid
+        int cols = 0;
+        int rows = 0;
+        for (Line line : puzzle) {
+            cols = Integer.max(Integer.max(cols, line.getX1()), line.getX2());
+            rows = Integer.max(Integer.max(rows, line.getY1()), line.getY2());
+        }
+        grid = new int[rows + 1][cols + 1];
     }
 }
