@@ -1,8 +1,11 @@
 package me.dibdin.adventofcode;
 
-import java.util.stream.Stream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.Class;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import java.util.stream.Stream;
 
 /**
  * Advent of Code app - main entry point
@@ -14,24 +17,50 @@ public class App {
         System.out.println( "| Advent of Code |");
         System.out.println( "------------------");
 
-        // Initialise the challenge
-        Challenge challenge = new me.dibdin.adventofcode.year2020.Day6();
+        int year;
+        int day;
+        Challenge challenge;
 
-        // Open the input file as an AutoCloseable resource, and make it available as a stream of lines
-        String filename = String.format("data/year%d/day%d.txt", challenge.getYear(), challenge.getDay());
-        try (Stream<String> stream = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(filename))).lines()) {
+        // Ask the user which challenge to run
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Which challege would you like to run?");
+            System.out.print("Year: ");
+            year = scanner.nextInt();
 
-            // Solve the challenge
-            challenge.setPuzzleInput(stream);
+            System.out.print("Day: ");
+            day = scanner.nextInt();
 
-            // Print the results
-            System.out.println("Solved the '" + challenge.getName() + "' Challenge (Year " + challenge.getYear() + ", Day " + challenge.getDay() + ")");
-            System.out.println("Part One Result: " + challenge.solvePartOne());
-            System.out.println("Part Two Result: " + challenge.solvePartTwo());
-                
-        } catch (Exception err) {
-            // Something serious has gone wrong
-            err.printStackTrace();
+            // find the Class to solve the requested challenge
+            challenge = (Challenge) Class.forName("me.dibdin.adventofcode.year" + year + ".Day" + day)
+                                            .getConstructor()
+                                            .newInstance();
+
+            // tell the user we're read to go
+            System.out.println("");
+            System.out.println("Solving the '" + challenge.getName() + "' Challenge (Year " 
+                                    + challenge.getYear() + ", Day " + challenge.getDay() + ")");
+                                    
+            // Open the input file as an AutoCloseable resource, and make it available as a stream of lines
+            String filename = String.format("data/year%d/day%d.txt", challenge.getYear(), challenge.getDay());
+            try (Stream<String> stream = new BufferedReader(
+                                            new InputStreamReader(
+                                                ClassLoader.getSystemResourceAsStream(filename)))
+                                        .lines()) {
+
+                // Solve the challenge
+                challenge.setPuzzleInput(stream);
+
+                // Print the results
+                System.out.println("Part One Result: " + challenge.solvePartOne());
+                System.out.println("Part Two Result: " + challenge.solvePartTwo());
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println("Unable to find Class for the specified year and day");
+        } catch (InputMismatchException e) {
+            System.out.println("Please run again with valid input numbers");
+        } catch (Exception e) {
+            System.out.println("Oops!! Something went wrong.");
+            e.printStackTrace();
         }
     }
 }
