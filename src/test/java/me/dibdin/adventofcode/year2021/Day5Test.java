@@ -56,7 +56,7 @@ class Day5Test {
      */
     @Test
     @Order(3)
-    @DisplayName("Solving With Sample Input Test")
+    @DisplayName("Solve With Sample Input Test")
     void solveWithSampleInputTest() {
         // form the test input stream
         Stream<String> input = Stream.of(
@@ -83,7 +83,7 @@ class Day5Test {
      * Test the solution with actual input data from the challenge.
      */
     @Test
-    @DisplayName("Solving With Actual Input Test")
+    @DisplayName("Solve With Actual Input Test")
     @Order(4)
     void solveWithActualInputTest() {
         String filename = String.format("data/year%d/day%d.txt", challenge.getYear(), challenge.getDay());

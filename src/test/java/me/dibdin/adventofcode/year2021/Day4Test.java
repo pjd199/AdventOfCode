@@ -2,6 +2,8 @@ package me.dibdin.adventofcode.year2021;
 
 import me.dibdin.adventofcode.Challenge;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.stream.Stream;
 import java.lang.IllegalStateException;
 
@@ -71,5 +73,24 @@ class Day4Test {
         // assert the result is corrent
         assertEquals(4512, challenge.solvePartOne());
         assertEquals(1924, challenge.solvePartTwo());
+    }
+
+    @Test
+    @DisplayName("Solve With Actual Input Test")
+    @Order(4)
+    void solveWithActualInputTest() {
+        String filename = String.format("data/year%d/day%d.txt", challenge.getYear(), challenge.getDay());
+        try (Stream<String> stream = new BufferedReader(
+                new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream(filename)))
+                                .lines()) {
+
+            // Solve the challenge
+            challenge.setPuzzleInput(stream);
+
+            // assert the result is corrent
+            assertEquals(27027, challenge.solvePartOne());
+            assertEquals(36975, challenge.solvePartTwo());
+        }
     }
 }

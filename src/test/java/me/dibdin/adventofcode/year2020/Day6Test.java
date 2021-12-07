@@ -1,6 +1,8 @@
 package me.dibdin.adventofcode.year2020;
 import me.dibdin.adventofcode.*;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.*;
@@ -65,5 +67,27 @@ class Day6Test {
         // assert the result are corrent
         assertEquals(11, challenge.solvePartOne());
         assertEquals(6, challenge.solvePartTwo());
+    }
+
+    /**
+     * Test the solution with actual input data from the challenge.
+     */
+    @Test
+    @DisplayName("Solve With Actual Input Test")
+    @Order(4)
+    void solveWithActualInputTest() {
+        String filename = String.format("data/year%d/day%d.txt", challenge.getYear(), challenge.getDay());
+        try (Stream<String> stream = new BufferedReader(
+                new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream(filename)))
+                                .lines()) {
+
+            // Solve the challenge
+            challenge.setPuzzleInput(stream);
+
+            // assert the result is corrent
+            assertEquals(7110, challenge.solvePartOne());
+            assertEquals(3628, challenge.solvePartTwo());
+        }
     }
 }
