@@ -2,10 +2,11 @@ package me.dibdin.adventofcode;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.Class;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.stream.Stream;
+
+import me.dibdin.adventofcode.util.ChallengeFactory;
 
 /**
  * Advent of Code app - main entry point
@@ -30,10 +31,8 @@ public class App {
             System.out.print("Day: ");
             day = scanner.nextInt();
 
-            // find the Class to solve the requested challenge
-            challenge = (Challenge) Class.forName("me.dibdin.adventofcode.year" + year + ".Day" + day)
-                                            .getConstructor()
-                                            .newInstance();
+            // get the Class to solve the requested challenge
+            challenge = ChallengeFactory.getChallengeInstance(year, day);
 
             // tell the user we're read to go
             System.out.println("");
