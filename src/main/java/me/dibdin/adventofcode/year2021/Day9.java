@@ -23,6 +23,11 @@ public class Day9 extends AbstractChallenge {
         super("Smoke Basin", 2021, 9);
     }
 
+    /**
+     * Find the lowest points in the puzzle
+     * 
+     * @return retun a array with lowest points marked true, otherwise false
+     */
     private boolean[][] findLowestPoints() {
 
         boolean isLowestPoint[][] = new boolean[puzzle.length][puzzle[0].length];
@@ -31,14 +36,10 @@ public class Day9 extends AbstractChallenge {
             for (int j = 0; j < puzzle[i].length; j++) {
                 if ((((i - 1) < 0) || (puzzle[i][j] < puzzle[i - 1][j])) && // up
                         (((i + 1) == puzzle.length) || (puzzle[i][j] < puzzle[i + 1][j])) && // down
-                        (((j - 1) < 0)
-                                || (puzzle[i][j] < puzzle[i][j - 1]))
-                        && // left
-                        (((j + 1) == puzzle[i].length)
-                                || (puzzle[i][j] < puzzle[i][j + 1])) // right
+                        (((j - 1) < 0) || (puzzle[i][j] < puzzle[i][j - 1])) && // left
+                        (((j + 1) == puzzle[i].length) || (puzzle[i][j] < puzzle[i][j + 1])) // right
                 ) {
                     isLowestPoint[i][j] = true;
-                    ;
                 }
             }
         }
@@ -54,9 +55,11 @@ public class Day9 extends AbstractChallenge {
             throw new IllegalStateException("No puzzle input set");
         }
 
+        // find the lowest points
         boolean[][] isLowestPoint = findLowestPoints();
-        long sum = 0;
 
+        // add up the risk value from all the lowest points in the puzzle
+        long sum = 0;
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle[i].length; j++) {
                 if (isLowestPoint[i][j]) {
@@ -68,16 +71,26 @@ public class Day9 extends AbstractChallenge {
         return sum;
     }
 
-    private void mapBasin(int[][] basinMap, int i, int j, boolean[][] isLowestPoint, int currentBasin) {
+    /**
+     * Recursively map a basin, but putting the basin Id in every place where the
+     * basin extends to
+     * 
+     * @param basinMap      the basin map to map out
+     * @param i             the first index of the basin map array
+     * @param j             the second index of the basin map array
+     * @param isLowestPoint the array of lowest points
+     * @param basinId       the current basin ID
+     */
+    private void mapBasin(int[][] basinMap, int i, int j, boolean[][] isLowestPoint, int basinId) {
         // if a valid index in the basin map and less than the top
         if (((i >= 0) && (i < basinMap.length) && (j >= 0) && (j < basinMap[i].length)) &&
-                (puzzle[i][j] < 9) && (basinMap[i][j] != currentBasin)) {
+                (puzzle[i][j] < 9) && (basinMap[i][j] != basinId)) {
 
-            basinMap[i][j] = currentBasin; // plot the basin
-            mapBasin(basinMap, i - 1, j, isLowestPoint, currentBasin); // map up
-            mapBasin(basinMap, i + 1, j, isLowestPoint, currentBasin); // map down
-            mapBasin(basinMap, i, j - 1, isLowestPoint, currentBasin); // map left
-            mapBasin(basinMap, i, j + 1, isLowestPoint, currentBasin); // map right
+            basinMap[i][j] = basinId; // plot the basin
+            mapBasin(basinMap, i - 1, j, isLowestPoint, basinId); // map up
+            mapBasin(basinMap, i + 1, j, isLowestPoint, basinId); // map down
+            mapBasin(basinMap, i, j - 1, isLowestPoint, basinId); // map left
+            mapBasin(basinMap, i, j + 1, isLowestPoint, basinId); // map right
         }
     }
 
