@@ -76,7 +76,7 @@ public class Day8 extends AbstractChallenge {
             throw new IllegalStateException("No puzzle input set");
         }
 
-        int sum = 0;
+        long sum = 0;
 
         for (int i = 0; i < signalsPatterns.size(); i++) {
             // we will be removing patterns from this list as each one is identified
