@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import me.dibdin.adventofcode.Challenge;
-import me.dibdin.adventofcode.util.ChallengeFactory;
 
 /**
  * Unit tests for Year 2021 Challenges
@@ -32,15 +32,17 @@ class DayXTest {
      */
     static enum Puzzles {
         // Results: { {EXAMPLE PART_ONE, PART_TWO}, {PRODUCTION PART_ONE, PART_TWO} }
-        DAY1(1, "Sonar Sweep", new long[][] { { 7, 5 }, { 1665, 1702 } }),
-        DAY2(2, "Dive!", new long[][] { { 150, 900 }, { 1604850, 1685186100 } }),
-        DAY3(3, "Binary Diagnostic", new long[][] { { 198, 230 }, { 3969000, 4267809 } }),
-        DAY4(4, "Giant Squid", new long[][] { { 4512, 1924 }, { 27027, 36975 } }),
-        DAY5(5, "Hydrothermal Venture", new long[][] { { 5, 12 }, { 8622, 22037 } }),
-        DAY6(6, "Lanternfish", new long[][] { { 5934, 26984457539L }, { 385391, 1728611055389L } }),
-        DAY7(7, "The Treachery of Whales", new long[][] { { 37, 168 }, { 349769, 99540554 } });
-        // DAYX(X, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        DAY1(Day1::new, 1, "Sonar Sweep", new long[][] { { 7, 5 }, { 1665, 1702 } }),
+        DAY2(Day2::new, 2, "Dive!", new long[][] { { 150, 900 }, { 1604850, 1685186100 } }),
+        DAY3(Day3::new, 3, "Binary Diagnostic", new long[][] { { 198, 230 }, { 3969000, 4267809 } }),
+        DAY4(Day4::new, 4, "Giant Squid", new long[][] { { 4512, 1924 }, { 27027, 36975 } }),
+        DAY5(Day5::new, 5, "Hydrothermal Venture", new long[][] { { 5, 12 }, { 8622, 22037 } }),
+        DAY6(Day6::new, 6, "Lanternfish", new long[][] { { 5934, 26984457539L }, { 385391, 1728611055389L } }),
+        DAY7(Day7::new, 7, "The Treachery of Whales", new long[][] { { 37, 168 }, { 349769, 99540554 } }),
+        DAY8(Day8::new, 8, "Seven Segment Search", new long[][] { { 26, 61229 }, { 473, 1097568 } });
+        // DAYX(DayX::new,, "X", new long[][] { { 0, 0 }, { 0, 0 } });
 
+        private Supplier<Challenge> challengeConstructor;
         private int day;
         private String name;
         private long[][] results;
@@ -53,7 +55,8 @@ class DayXTest {
          * @param results the results formatted as { {EXAMPLE PART_ONE, PART_TWO},
          *                {PRODUCTION PART_ONE, PART_TWO} }
          */
-        private Puzzles(int day, String name, long[][] results) {
+        private Puzzles(Supplier<Challenge> challengeConstructor, int day, String name, long[][] results) {
+            this.challengeConstructor = challengeConstructor;
             this.day = day;
             this.name = name;
             this.results = results;
@@ -86,6 +89,13 @@ class DayXTest {
         private long[][] getResults() {
             return results;
         }
+
+        /**
+         * Create a new instance of the Challenge object
+         */
+        private Challenge getChallengeInstance() {
+            return challengeConstructor.get();
+        }
     }
 
     static final int EXAMPLE = 0;
@@ -110,9 +120,7 @@ class DayXTest {
     void informationTest(Puzzles puzzle) {
 
         // Initialise the challenge
-        Challenge challenge = assertDoesNotThrow(() -> {
-            return ChallengeFactory.getChallengeInstance(year, puzzle.getDay());
-        });
+        Challenge challenge = puzzle.getChallengeInstance();
 
         // Check all the information is correct
         assertTrue(challenge.getName().equals(puzzle.getName()));
@@ -132,9 +140,7 @@ class DayXTest {
     void cannotSolveBeforeSettingPuzzleInputTest(Puzzles puzzle) {
 
         // Initialise the challenge
-        Challenge challenge = assertDoesNotThrow(() -> {
-            return ChallengeFactory.getChallengeInstance(year, puzzle.getDay());
-        });
+        Challenge challenge = puzzle.getChallengeInstance();
 
         // Check it throws an exception when there is no input
         assertThrows(IllegalStateException.class, () -> challenge.solvePartOne());
@@ -153,9 +159,7 @@ class DayXTest {
     void solvePartOneTest(Puzzles puzzle) {
 
         // Initialise the challenge
-        Challenge challenge = assertDoesNotThrow(() -> {
-            return ChallengeFactory.getChallengeInstance(year, puzzle.getDay());
-        });
+        Challenge challenge = puzzle.getChallengeInstance();
 
         // Open the example input file as a stream
         final String exampleFilename = String.format(pathTemplate[EXAMPLE], year, puzzle.getDay());
@@ -204,9 +208,7 @@ class DayXTest {
     void solvePartTwoTest(Puzzles puzzle) {
 
         // Initialise the challenge
-        Challenge challenge = assertDoesNotThrow(() -> {
-            return ChallengeFactory.getChallengeInstance(year, puzzle.getDay());
-        });
+        Challenge challenge = puzzle.getChallengeInstance();
 
         // Open the example input file as a stream
         final String exampleFilename = String.format(pathTemplate[EXAMPLE], year, puzzle.getDay());
