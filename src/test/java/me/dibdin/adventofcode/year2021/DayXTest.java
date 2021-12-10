@@ -30,7 +30,7 @@ class DayXTest {
     /**
      * An enumeration of puzzles used as input for the parameterize testing.
      */
-    static enum Puzzles {
+    private static enum Puzzles {
         // Results: { {EXAMPLE PART_ONE, PART_TWO}, {PRODUCTION PART_ONE, PART_TWO} }
         DAY1(Day1::new, 1, "Sonar Sweep", new long[][] { { 7, 5 }, { 1665, 1702 } }),
         DAY2(Day2::new, 2, "Dive!", new long[][] { { 150, 900 }, { 1604850, 1685186100 } }),
@@ -39,8 +39,9 @@ class DayXTest {
         DAY5(Day5::new, 5, "Hydrothermal Venture", new long[][] { { 5, 12 }, { 8622, 22037 } }),
         DAY6(Day6::new, 6, "Lanternfish", new long[][] { { 5934, 26984457539L }, { 385391, 1728611055389L } }),
         DAY7(Day7::new, 7, "The Treachery of Whales", new long[][] { { 37, 168 }, { 349769, 99540554 } }),
-        DAY8(Day8::new, 8, "Seven Segment Search", new long[][] { { 26, 61229 }, { 473, 1097568 } });
-        // DAYX(DayX::new,, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        DAY8(Day8::new, 8, "Seven Segment Search", new long[][] { { 26, 61229 }, { 473, 1097568 } }),
+        DAY9(Day9::new, 9, "Smoke Basin", new long[][] { { 15, 1134 }, { 504, 1558722 } });
+        // DAYX(DayX::new, X, "X", new long[][] { { 0, 0 }, { 0, 0 } });
 
         private Supplier<Challenge> challengeConstructor;
         private int day;
