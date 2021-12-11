@@ -41,7 +41,8 @@ class DayXTest {
         DAY7(Day7::new, 7, "The Treachery of Whales", new long[][] { { 37, 168 }, { 349769, 99540554 } }),
         DAY8(Day8::new, 8, "Seven Segment Search", new long[][] { { 26, 61229 }, { 473, 1097568 } }),
         DAY9(Day9::new, 9, "Smoke Basin", new long[][] { { 15, 1134 }, { 504, 1558722 } }),
-        DAY10(Day10::new, 10, "Syntax Scoring", new long[][] { { 26397, 288957 }, { 367059, 1952146692 } });
+        DAY10(Day10::new, 10, "Syntax Scoring", new long[][] { { 26397, 288957 }, { 367059, 1952146692 } }),
+        DAY11(Day11::new, 11, "Dumbo Octopus", new long[][] { { 1656, 195 }, { 1681, 276 } });
         // DAYX(DayX::new, X, "X", new long[][] { { 0, 0 }, { 0, 0 } });
 
         private Supplier<Challenge> challengeConstructor;
@@ -112,44 +113,6 @@ class DayXTest {
     };
 
     /**
-     * Check the year, day and name are correct.
-     * 
-     * @param puzzle The puzzle under test.
-     */
-    @ParameterizedTest
-    @DisplayName("Information Test")
-    @EnumSource(Puzzles.class)
-    void informationTest(Puzzles puzzle) {
-
-        // Initialise the challenge
-        Challenge challenge = puzzle.getChallengeInstance();
-
-        // Check all the information is correct
-        assertTrue(challenge.getName().equals(puzzle.getName()));
-        assertTrue(challenge.getYear() == year);
-        assertTrue(challenge.getDay() == puzzle.getDay());
-    }
-
-    /**
-     * Check that an exception is throw when trying to solve the challenge before
-     * setting input.
-     * 
-     * @param puzzle The puzzle under test.
-     */
-    @ParameterizedTest
-    @DisplayName("Cannot Solve Before Setting Puzzle Input Test")
-    @EnumSource(Puzzles.class)
-    void cannotSolveBeforeSettingPuzzleInputTest(Puzzles puzzle) {
-
-        // Initialise the challenge
-        Challenge challenge = puzzle.getChallengeInstance();
-
-        // Check it throws an exception when there is no input
-        assertThrows(IllegalStateException.class, () -> challenge.solvePartOne());
-        assertThrows(IllegalStateException.class, () -> challenge.solvePartTwo());
-    }
-
-    /**
      * Solve part one of the puzzle, first with the sample input, then the
      * production input
      * 
@@ -178,7 +141,7 @@ class DayXTest {
         });
 
         // Check the result is correct
-        assertEquals(puzzle.getResults()[EXAMPLE][PART_ONE], challenge.solvePartOne());
+            assertEquals(puzzle.getResults()[EXAMPLE][PART_ONE], challenge.solvePartOne());
 
         // Open the production input file as a stream
         final String productionFilename = String.format(pathTemplate[PRODUCTION], year, puzzle.getDay());
@@ -245,5 +208,43 @@ class DayXTest {
 
         // Check the result is correct
         assertEquals(puzzle.getResults()[PRODUCTION][PART_TWO], challenge.solvePartTwo());
+    }
+
+    /**
+     * Check the year, day and name are correct.
+     * 
+     * @param puzzle The puzzle under test.
+     */
+    @ParameterizedTest
+    @DisplayName("Information Test")
+    @EnumSource(Puzzles.class)
+    void informationTest(Puzzles puzzle) {
+
+        // Initialise the challenge
+        Challenge challenge = puzzle.getChallengeInstance();
+
+        // Check all the information is correct
+        assertTrue(challenge.getName().equals(puzzle.getName()));
+        assertTrue(challenge.getYear() == year);
+        assertTrue(challenge.getDay() == puzzle.getDay());
+    }
+
+    /**
+     * Check that an exception is throw when trying to solve the challenge before
+     * setting input.
+     * 
+     * @param puzzle The puzzle under test.
+     */
+    @ParameterizedTest
+    @DisplayName("Cannot Solve Before Setting Puzzle Input Test")
+    @EnumSource(Puzzles.class)
+    void cannotSolveBeforeSettingPuzzleInputTest(Puzzles puzzle) {
+
+        // Initialise the challenge
+        Challenge challenge = puzzle.getChallengeInstance();
+
+        // Check it throws an exception when there is no input
+        assertThrows(IllegalStateException.class, () -> challenge.solvePartOne());
+        assertThrows(IllegalStateException.class, () -> challenge.solvePartTwo());
     }
 }
