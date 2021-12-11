@@ -1,12 +1,10 @@
 package me.dibdin.adventofcode.year2021;
 
-import me.dibdin.adventofcode.AbstractChallenge;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.lang.IllegalStateException;
+
+import me.dibdin.adventofcode.AbstractChallenge;
+import me.dibdin.adventofcode.util.InputDecoder;
 
 /**
  * Advent of Code Challenge 2021 - Day 9: Smoke Basin.
@@ -147,18 +145,6 @@ public class Day9 extends AbstractChallenge {
      * challenge.
      */
     public void setPuzzleInput(Stream<String> input) {
-
-        // load the input
-        ArrayList<String> list = input.collect(Collectors.toCollection(ArrayList<String>::new));
-
-        // size the puzzle
-        puzzle = new int[list.size()][list.get(0).length()];
-
-        // break down each string in the list into an array of integers
-        for (int i = 0; i < puzzle.length; i++) {
-            for (int j = 0; j < puzzle[i].length; j++) {
-                puzzle[i][j] = Integer.parseInt(list.get(i).substring(j, j + 1));
-            }
-        }
+        puzzle = InputDecoder.decodeAsTwoDimensionalIntArray(input);
     }
 }
