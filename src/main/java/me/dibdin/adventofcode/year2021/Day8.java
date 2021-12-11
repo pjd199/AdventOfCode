@@ -221,7 +221,5 @@ public class Day8 extends AbstractChallenge {
                 outputValues.add(Arrays.copyOfRange(tokens, 11, 15));
             }
         }
-
-        System.out.println("SP " + signalsPatterns.size() + " OV " + outputValues.size());
     }
 }
