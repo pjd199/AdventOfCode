@@ -40,7 +40,8 @@ class DayXTest {
         DAY6(Day6::new, 6, "Lanternfish", new long[][] { { 5934, 26984457539L }, { 385391, 1728611055389L } }),
         DAY7(Day7::new, 7, "The Treachery of Whales", new long[][] { { 37, 168 }, { 349769, 99540554 } }),
         DAY8(Day8::new, 8, "Seven Segment Search", new long[][] { { 26, 61229 }, { 473, 1097568 } }),
-        DAY9(Day9::new, 9, "Smoke Basin", new long[][] { { 15, 1134 }, { 504, 1558722 } });
+        DAY9(Day9::new, 9, "Smoke Basin", new long[][] { { 15, 1134 }, { 504, 1558722 } }),
+        DAY10(Day10::new, 10, "Syntax Scoring", new long[][] { { 26397, 288957 }, { 367059, 1952146692 } });
         // DAYX(DayX::new, X, "X", new long[][] { { 0, 0 }, { 0, 0 } });
 
         private Supplier<Challenge> challengeConstructor;
