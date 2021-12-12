@@ -42,8 +42,21 @@ class DayXTest {
         DAY8(Day8::new, 8, "Seven Segment Search", new long[][] { { 26, 61229 }, { 473, 1097568 } }),
         DAY9(Day9::new, 9, "Smoke Basin", new long[][] { { 15, 1134 }, { 504, 1558722 } }),
         DAY10(Day10::new, 10, "Syntax Scoring", new long[][] { { 26397, 288957 }, { 367059, 1952146692 } }),
-        DAY11(Day11::new, 11, "Dumbo Octopus", new long[][] { { 1656, 195 }, { 1681, 276 } });
-        // DAYX(DayX::new, X, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        DAY11(Day11::new, 11, "Dumbo Octopus", new long[][] { { 1656, 195 }, { 1681, 276 } }),
+        DAY12(Day12::new, 12, "Passage Pathing", new long[][] { { 226, 3509 }, { 5104, 149220 } });
+        //DAY13(Day13::new, 13, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY14(Day14::new, 14, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY15(Day15::new, 15, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY16(Day16::new, 16, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY17(Day17::new, 17, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY18(Day18::new, 18, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY19(Day19::new, 19, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY20(Day20::new, 20, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY21(Day21::new, 21, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY22(Day22::new, 22, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY23(Day23::new, 23, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY24(Day24::new, 24, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        //DAY25(Day25::new, 25, "X", new long[][] { { 0, 0 }, { 0, 0 } });
 
         private Supplier<Challenge> challengeConstructor;
         private int day;
@@ -141,7 +154,7 @@ class DayXTest {
         });
 
         // Check the result is correct
-            assertEquals(puzzle.getResults()[EXAMPLE][PART_ONE], challenge.solvePartOne());
+        assertEquals(puzzle.getResults()[EXAMPLE][PART_ONE], challenge.solvePartOne());
 
         // Open the production input file as a stream
         final String productionFilename = String.format(pathTemplate[PRODUCTION], year, puzzle.getDay());
