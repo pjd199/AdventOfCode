@@ -1,0 +1,53 @@
+package me.dibdin.adventofcode.year2021;
+
+import me.dibdin.adventofcode.AbstractChallenge;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.lang.IllegalStateException;
+
+/**
+ * Advent of Code Challenge 2021 - Day X: NAME.
+ * https://adventofcode.com/2021/day/X
+ */
+public class DayX extends AbstractChallenge {
+
+    ArrayList<String> puzzle = null;
+
+    /**
+     * Constructor.
+     */
+    public DayX() {
+        super ("NAME", 2021, X);
+    }
+
+    /**
+     * Solve part one of the puzzle
+     */
+    public long solvePartOne() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
+        return -1;
+    }
+
+    /**
+     * Solve part two of the puzzle
+     */
+    public long solvePartTwo() {
+        if (puzzle == null) { 
+            throw new IllegalStateException("No puzzle input set");
+        }
+
+        return -1;
+    }
+
+    /**
+     * Take the stream of strings, and decode the input into puzzle data for this challenge.
+     */
+    public void setPuzzleInput(Stream<String> input) {
+        puzzle = input.collect(Collectors.toCollection(ArrayList<String>::new)); 
+    }
+}
