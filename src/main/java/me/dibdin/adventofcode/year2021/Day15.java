@@ -101,11 +101,6 @@ public class Day15 extends AbstractChallenge {
                 return current.weight;
             }
 
-            if ((pq.size() % 1000) == 0) {
-                int target = (grid.length * grid[0].length);
-                System.out.println((target - pq.size()) + " / " + target);
-            }
-
             // look left
             if (current.x > 0) {
                 Node left = nodes[current.y][current.x - 1];
