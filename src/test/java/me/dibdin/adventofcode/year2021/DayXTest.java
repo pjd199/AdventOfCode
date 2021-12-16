@@ -45,8 +45,9 @@ class DayXTest {
         DAY11(Day11::new, 11, "Dumbo Octopus", new long[][] { { 1656, 195 }, { 1681, 276 } }),
         DAY12(Day12::new, 12, "Passage Pathing", new long[][] { { 226, 3509 }, { 5104, 149220 } }),
         DAY13(Day13::new, 13, "Transparent Origami", new long[][] { { 17, -1 }, { 607, -1 } }), // part 2 prints ASCII art
-        DAY14(Day14::new, 14, "Extended Polymerization", new long[][] { { 1588, 2188189693529L }, { 2027, 2265039461737L } });
-        //DAY15(Day15::new, 15, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        DAY14(Day14::new, 14, "Extended Polymerization", new long[][] { { 1588, 2188189693529L }, { 2027, 2265039461737L } }),
+        DAY15(Day15::new, 15, "Chiton", new long[][] { { 40, 315 }, { 621, 2904 } }); // painfully slow part 2
+        
         //DAY16(Day16::new, 16, "X", new long[][] { { 0, 0 }, { 0, 0 } });
         //DAY17(Day17::new, 17, "X", new long[][] { { 0, 0 }, { 0, 0 } });
         //DAY18(Day18::new, 18, "X", new long[][] { { 0, 0 }, { 0, 0 } });
