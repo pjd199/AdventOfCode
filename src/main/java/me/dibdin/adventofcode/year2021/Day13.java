@@ -102,7 +102,7 @@ public class Day13 extends AbstractChallenge {
         for (int y = 0; y < dots.length; y++) {
             StringBuilder sb = new StringBuilder(y + ": ");
             for (int x = 0; x < dots[y].length; x++) {
-                sb.append(dots[y][x] ? "#" : ".");
+                sb.append(dots[y][x] ? "#" : " ");
             }
             System.out.println(sb);
         }
