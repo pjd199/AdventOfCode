@@ -26,7 +26,7 @@ public class Day15 extends AbstractChallenge {
     /**
      * A node in the graph
      */
-    class Node {
+    class GraphNode {
         public int x;
         public int y;
         public int weight;
@@ -34,8 +34,8 @@ public class Day15 extends AbstractChallenge {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof Node) {
-                Node n = (Node) obj;
+            if (obj instanceof GraphNode) {
+                GraphNode n = (GraphNode) obj;
                 return ((this.x == n.x) && (this.y == n.y));
             } else {
                 return false;
@@ -48,9 +48,9 @@ public class Day15 extends AbstractChallenge {
         }
     }
 
-    class CompareNodeweight implements Comparator<Node> {
+    class CompareNodeweight implements Comparator<GraphNode> {
 
-        public int compare(Node n1, Node n2) {
+        public int compare(GraphNode n1, GraphNode n2) {
             return n1.weight - n2.weight;
         }
 
@@ -68,13 +68,13 @@ public class Day15 extends AbstractChallenge {
      * @return the total weight of the shortest path
      */
     private int findShortestPath(int[][] grid) {
-        PriorityQueue<Node> pq = new PriorityQueue<Node>(grid.length * grid[0].length, new CompareNodeweight());
+        PriorityQueue<GraphNode> pq = new PriorityQueue<GraphNode>(grid.length * grid[0].length, new CompareNodeweight());
 
-        Node[][] nodes = new Node[grid.length][grid[0].length];
+        GraphNode[][] nodes = new GraphNode[grid.length][grid[0].length];
 
         for (int y = 0; y < grid.length; y++) {
             for (int x = 0; x < grid[0].length; x++) {
-                nodes[y][x] = new Node();
+                nodes[y][x] = new GraphNode();
                 nodes[y][x].x = x;
                 nodes[y][x].y = y;
                 nodes[y][x].weight = Integer.MAX_VALUE;
@@ -88,11 +88,11 @@ public class Day15 extends AbstractChallenge {
         nodes[0][0].weight = 0;
         pq.add(nodes[0][0]);
 
-        Node endNode = nodes[nodes.length -1][nodes[0].length-1];
+        GraphNode endNode = nodes[nodes.length -1][nodes[0].length-1];
 
         while (pq.size() > 0) {
             // remove the node with the smallest weight from the queue
-            Node current = pq.poll();
+            GraphNode current = pq.poll();
             current.visited = true;
 
             // have we reached the end point
@@ -102,7 +102,7 @@ public class Day15 extends AbstractChallenge {
 
             // look left
             if (current.x > 0) {
-                Node left = nodes[current.y][current.x - 1];
+                GraphNode left = nodes[current.y][current.x - 1];
                 if (!left.visited) {
                     int tempWeight = current.weight + grid[current.y][current.x - 1];
                     if (tempWeight < left.weight) {
@@ -115,7 +115,7 @@ public class Day15 extends AbstractChallenge {
 
             // look right
             if (current.x < (grid[0].length - 1)) {
-                Node right = nodes[current.y][current.x + 1];
+                GraphNode right = nodes[current.y][current.x + 1];
                 if (!right.visited) {
                     int tempWeight = current.weight + grid[current.y][current.x + 1];
                     if (tempWeight < right.weight) {
@@ -128,7 +128,7 @@ public class Day15 extends AbstractChallenge {
 
             // look up
             if (current.y > 0) {
-                Node up = nodes[current.y - 1][current.x];
+                GraphNode up = nodes[current.y - 1][current.x];
                 if (!up.visited) {
                     int tempWeight = current.weight + grid[current.y - 1][current.x];
                     if (tempWeight < up.weight) {
@@ -141,7 +141,7 @@ public class Day15 extends AbstractChallenge {
 
             // look down
             if (current.y < (grid.length - 1)) {
-                Node down = nodes[current.y + 1][current.x];
+                GraphNode down = nodes[current.y + 1][current.x];
                 if (!down.visited) {
                     int tempWeight = current.weight + grid[current.y + 1][current.x];
                     if (tempWeight < down.weight) {
