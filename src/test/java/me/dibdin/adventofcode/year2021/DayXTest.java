@@ -32,7 +32,7 @@ class DayXTest {
      */
     private static enum Puzzles {
         // Results: { {EXAMPLE PART_ONE, PART_TWO}, {PRODUCTION PART_ONE, PART_TWO} }
-        
+
         DAY1(Day1::new, 1, "Sonar Sweep", new long[][] { { 7, 5 }, { 1665, 1702 } }),
         DAY2(Day2::new, 2, "Dive!", new long[][] { { 150, 900 }, { 1604850, 1685186100 } }),
         DAY3(Day3::new, 3, "Binary Diagnostic", new long[][] { { 198, 230 }, { 3969000, 4267809 } }),
@@ -50,9 +50,9 @@ class DayXTest {
         DAY15(Day15::new, 15, "Chiton", new long[][] { { 40, 315 }, { 621, 2904 } }), // painfully slow part 2
         DAY16(Day16::new, 16, "Packet Decoder", new long[][] { { 20, 1 }, { 917, 2536453523344L } }),    
         DAY17(Day17::new, 17, "Trick Shot", new long[][] { { 45, 112 }, { 2628, 1334 } }),
-        DAY18(Day18::new, 18, "Snailfish", new long[][] { { 4140, 3993 }, { 4137, 4573 } });
-
-        //DAY19(Day19::new, 19, "X", new long[][] { { 0, 0 }, { 0, 0 } });
+        DAY18(Day18::new, 18, "Snailfish", new long[][] { { 4140, 3993 }, { 4137, 4573 } }),
+        DAY19(Day19::new, 19, "Beacon Scanner", new long[][] { { 79, 3621 }, { 353, 10832 } });
+        
         //DAY20(Day20::new, 20, "X", new long[][] { { 0, 0 }, { 0, 0 } });
         //DAY21(Day21::new, 21, "X", new long[][] { { 0, 0 }, { 0, 0 } });
         //DAY22(Day22::new, 22, "X", new long[][] { { 0, 0 }, { 0, 0 } });
