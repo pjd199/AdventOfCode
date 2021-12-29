@@ -1,6 +1,5 @@
 package me.dibdin.adventofcode.year2021;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import me.dibdin.adventofcode.AbstractChallenge;
+import me.dibdin.adventofcode.util.Point2D;
 
 /**
  * Advent of Code Challenge 2021 - Day 13: Transparent Origami.
@@ -16,7 +16,7 @@ import me.dibdin.adventofcode.AbstractChallenge;
  */
 public class Day13 extends AbstractChallenge {
 
-    HashSet<Point> points = null;
+    HashSet<Point2D> points = null;
     ArrayList<String> instructions = null;
 
     /**
@@ -32,30 +32,30 @@ public class Day13 extends AbstractChallenge {
      * @param instruction the folding instruction
      * @return a new set containing the folded points
      */
-    private HashSet<Point> foldPaper(Set<Point> input, String instruction) {
+    private HashSet<Point2D> foldPaper(Set<Point2D> input, String instruction) {
 
         final int foldAt = Integer.parseInt(instruction.split("=")[1]);
 
         if (instruction.contains("y=")) {
             // fold the paper up
             return input.stream()
-                    .map((Point point) -> {
+                    .map((Point2D point) -> {
                         if (point.y > foldAt) {
-                            return new Point(point.x, foldAt - (point.y - foldAt));
+                            return new Point2D(point.x, foldAt - (point.y - foldAt));
                         } else {
                             return point;
                         }
-                    }).collect(Collectors.toCollection(HashSet<Point>::new));
+                    }).collect(Collectors.toCollection(HashSet<Point2D>::new));
         } else {
             // fold the paper left
             return input.stream()
-                    .map((Point point) -> {
+                    .map((Point2D point) -> {
                         if (point.x > foldAt) {
-                            return new Point(foldAt - (point.x - foldAt), point.y);
+                            return new Point2D(foldAt - (point.x - foldAt), point.y);
                         } else {
                             return point;
                         }
-                    }).collect(Collectors.toCollection(HashSet<Point>::new));
+                    }).collect(Collectors.toCollection(HashSet<Point2D>::new));
         }
     }
 
@@ -80,7 +80,7 @@ public class Day13 extends AbstractChallenge {
         }
 
         // add the points to the paper
-        HashSet<Point> paper = new HashSet<Point>(points);
+        HashSet<Point2D> paper = new HashSet<Point2D>(points);
 
         // complete all the fold instructions
         for (String instruction : instructions) {
@@ -93,7 +93,7 @@ public class Day13 extends AbstractChallenge {
 
         // map the dots into an array
         boolean[][] dots = new boolean[maxY + 1][maxX + 1];
-        for (Point point : paper) {
+        for (Point2D point : paper) {
             dots[point.y][point.x] = true;
         }
 
@@ -118,7 +118,7 @@ public class Day13 extends AbstractChallenge {
      */
     public void setPuzzleInput(Stream<String> input) {
         // Initialise the data structures
-        points = new HashSet<Point>();
+        points = new HashSet<Point2D>();
         instructions = new ArrayList<String>();
 
         // Iterate through the lines
@@ -129,7 +129,7 @@ public class Day13 extends AbstractChallenge {
             if (line.contains(",")) {
                 // Found a point in form "x,y"
                 String[] tokens = line.split(",");
-                points.add(new Point(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1])));
+                points.add(new Point2D(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1])));
 
             } else if (line.contains("fold along")) {
                 // Found a folding instruction
